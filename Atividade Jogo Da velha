@@ -1,0 +1,100 @@
+package jogo.da.velha;
+
+import java.util.Scanner;
+
+public class JogoDaVelha {
+    String[][] tabuleiro = new String [3][3];
+    boolean Jogador1 = true;
+    boolean terminou = false;
+    int linha = 0;
+    int coluna = 0;
+    Scanner in = new Scanner(System.in);
+    
+    
+    public static void main(String[] args){
+        System.out.println("Iniciando o Jogo da Velha...");
+        new JogoDaVelha();
+    }
+    
+    public JogoDaVelha(){
+        for(int i = 0; i < tabuleiro.length; i++){
+            for(int j = 0; j < tabuleiro[i].length; j++){
+                tabuleiro[i][j] = "_";
+            }
+        }
+        Jogo();
+    }
+    public void Jogo(){ 
+        do{
+            System.out.println("Faça sua jogada, jogador "+(Jogador1 ? "X" : "O" ));
+            
+            Preencher();
+            tabuleiro[linha - 1][coluna - 1] = (Jogador1 ? "X" : "O");
+            
+            Jogada();
+            if(terminou){
+                System.out.println("Parabens, o Jogador " +(Jogador1 ? "X" : "O")+" venceu!");
+            }
+            Jogador1 = !Jogador1;
+        }while(!terminou);
+    }
+        
+        
+    public void Preencher(){
+         
+         int l , c;
+         
+                do{
+                    System.out.println("Digite a linha que deseja colocar "+ (Jogador1 ? "X" : "O" ));
+                l = in.nextInt();
+                
+                }while(!(l < 4 && l > 0));
+                linha = l;
+                
+                do{
+                    System.out.println("Em qual coluna deseja colocar "+ (Jogador1 ? "X" : "O"));
+                c = in.nextInt();
+                }while(!(c < 4 && c > 0));
+                coluna = c;
+                
+        
+    }
+    
+    public void Jogada(){
+     for(int i = 0; i < tabuleiro.length; i++){
+        for(int j = 0; j < tabuleiro[i].length; j++){
+            System.out.print(tabuleiro[i][j]);
+                 if(j < 2){
+                     System.out.print("   |   ");
+                 }
+            }
+        System.out.println("");
+     }
+     verificar();
+    }
+    
+    public void verificar(){
+        
+        
+        if((tabuleiro[0][0] == "X" && tabuleiro[0][1] == "X" && tabuleiro[0][2] == "X") ||
+           (tabuleiro[1][0] == "X" && tabuleiro[1][1] == "X" && tabuleiro[1][2] == "X") ||
+           (tabuleiro[2][0] == "X" && tabuleiro[2][1] == "X" && tabuleiro[2][2] == "X") ||
+           (tabuleiro[0][0] == "X" && tabuleiro[1][0] == "X" && tabuleiro[2][0] == "X") ||
+           (tabuleiro[0][1] == "X" && tabuleiro[1][1] == "X" && tabuleiro[2][1] == "X") ||
+           (tabuleiro[0][2] == "X" && tabuleiro[1][2] == "X" && tabuleiro[2][2] == "X") ){
+            terminou = true;
+        }
+           
+        if((tabuleiro[0][0] == "O" && tabuleiro[0][1] == "O" && tabuleiro[0][2] == "O") ||
+           (tabuleiro[1][0] == "O" && tabuleiro[1][1] == "O" && tabuleiro[1][2] == "O") ||
+           (tabuleiro[2][0] == "O" && tabuleiro[2][1] == "O" && tabuleiro[2][2] == "O") ||
+           (tabuleiro[0][0] == "O" && tabuleiro[1][0] == "O" && tabuleiro[2][0] == "O") ||
+           (tabuleiro[0][1] == "O" && tabuleiro[1][1] == "O" && tabuleiro[2][1] == "O") ||
+           (tabuleiro[0][2] == "O" && tabuleiro[1][2] == "O" && tabuleiro[2][2] == "O") ){
+            terminou = true;
+        }
+}
+         
+        
+}
+
