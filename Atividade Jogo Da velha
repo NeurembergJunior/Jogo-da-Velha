@@ -11,7 +11,7 @@ public class GameOfVelha {
         System.out.println("Jogadores se preparem...");
         System.out.println("Jogador 1 você começa marcando X,");
         System.out.println("Após ele será voce jogador 2, marcando O.");
-        
+        System.out.println("Ultilize as teclas 0,1 e 2 para marcar as linhas e colunas desejadas.");
         
         Sistema sistema = new Sistema();
         Tabuleiro tabuleiro = new Tabuleiro();
