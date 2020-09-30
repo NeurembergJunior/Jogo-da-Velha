@@ -18,7 +18,9 @@ public class GameOfVelha {
         
         Jogador jogador1 = new Jogador(1);
         Jogador jogador2 = new Jogador(2);
-
+        
+        
+        
         Jogador jogador = jogador1;
         
         boolean Fim = false;
@@ -43,6 +45,23 @@ public class GameOfVelha {
             }
         
         sistema.imprimeTabuleiro(tabuleiro);
+        
+        
+        if (tabuleiro.verificaVitoria("X")) {
+                System.out.println("Vitória do jogador 1");
+                Fim = true;
+                System.exit(0);
+            } else if (tabuleiro.verificaVitoria("O")) {
+                System.out.println("Vitória do jogador 2");
+                Fim = true;
+                System.exit(0);
+            } else if ((jogador1.Jogada() + jogador2.Jogada()) == 9) {
+                System.out.println("Deu velha!");
+                Fim = true;
+                System.exit(0);
+            }
+        
+      
         System.out.println("Sua vez jogador 2");
     
             if (jogador2.NumeroJogador() == 2) {
@@ -63,23 +82,22 @@ public class GameOfVelha {
                 sistema.imprimeTabuleiro(tabuleiro);
                 
             }
-        
-      
-    if (tabuleiro.verificaVitoria("X")) {
+        if (tabuleiro.verificaVitoria("X")) {
                 System.out.println("Vitória do jogador 1");
                 Fim = true;
+                System.exit(0);
             } else if (tabuleiro.verificaVitoria("O")) {
                 System.out.println("Vitória do jogador 2");
                 Fim = true;
+                System.exit(0);
             } else if ((jogador1.Jogada() + jogador2.Jogada()) == 9) {
                 System.out.println("Deu velha!");
                 Fim = true;
+                System.exit(0);
             }
+            
         } while (!Fim);
-    
-
 }
-    
     
 }
 
