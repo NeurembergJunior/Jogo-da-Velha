@@ -1,100 +1,215 @@
-package jogo.da.velha;
+package JOGODAVELHINHA;
+
+
+public class GameOfVelha {
+
+    
+    public static void main(String[] args) {
+        
+        
+        System.out.println("Iniciando o Jogo da Velha...");
+        System.out.println("Jogadores se preparem...");
+        System.out.println("Jogador 1 você começa marcando X,");
+        System.out.println("Após ele será voce jogador 2, marcando O.");
+        
+        
+        Sistema sistema = new Sistema();
+        Tabuleiro tabuleiro = new Tabuleiro();
+        
+        Jogador jogador1 = new Jogador(1);
+        Jogador jogador2 = new Jogador(2);
+
+        Jogador jogador = jogador1;
+        
+        boolean Fim = false;
+        
+        
+        do {
+            System.out.println("Seu turno Jogador 1:");
+            if (jogador.NumeroJogador() == 1) {
+                
+                jogador.jogada(tabuleiro, sistema.lerLinha(), sistema.lerColuna());
+                
+            } else {
+                
+            }
+        if (jogador == jogador1) {
+                jogador = jogador1;
+                
+                
+                
+            } else {
+                jogador = jogador2;
+            }
+        
+        sistema.imprimeTabuleiro(tabuleiro);
+        System.out.println("Sua vez jogador 2");
+    
+            if (jogador2.NumeroJogador() == 2) {
+                
+                jogador2.jogada2(tabuleiro, sistema.lerLinha(), sistema.lerColuna());
+                
+            } else {
+                
+            }
+        if (jogador == jogador2) {
+                jogador = jogador2;
+                
+                
+                
+            } else {
+                jogador = jogador1;
+                
+                sistema.imprimeTabuleiro(tabuleiro);
+                
+            }
+        
+      
+    if (tabuleiro.verificaVitoria("X")) {
+                System.out.println("Vitória do jogador 1");
+                Fim = true;
+            } else if (tabuleiro.verificaVitoria("O")) {
+                System.out.println("Vitória do jogador 2");
+                Fim = true;
+            } else if ((jogador1.Jogada() + jogador2.Jogada()) == 9) {
+                System.out.println("Deu velha!");
+                Fim = true;
+            }
+        } while (!Fim);
+    
+
+}
+    
+    
+}
+
+
+
+
+package JOGODAVELHINHA;
 
 import java.util.Scanner;
 
-public class JogoDaVelha {
-    String[][] tabuleiro = new String [3][3];
-    boolean Jogador1 = true;
-    boolean terminou = false;
-    int linha = 0;
-    int coluna = 0;
-    Scanner in = new Scanner(System.in);
+public class Sistema {
+    
+    private Scanner entrada = new Scanner(System.in);
     
     
-    public static void main(String[] args){
-        System.out.println("Iniciando o Jogo da Velha...");
-        new JogoDaVelha();
-    }
+    public Sistema() {}
     
-    public JogoDaVelha(){
-        for(int i = 0; i < tabuleiro.length; i++){
-            for(int j = 0; j < tabuleiro[i].length; j++){
-                tabuleiro[i][j] = "_";
+     public void imprimeTabuleiro(Tabuleiro tabuleiro) {
+        for (int linha = 0; linha < 3; linha++) {
+            for (int coluna = 0; coluna < 3; coluna++) {
+                System.out.print(tabuleiro.LerPosicao(linha, coluna) + " | ");
             }
-        }
-        Jogo();
-    }
-    public void Jogo(){ 
-        do{
-            System.out.println("Faça sua jogada, jogador "+(Jogador1 ? "X" : "O" ));
+            System.out.println();
             
-            Preencher();
-            tabuleiro[linha - 1][coluna - 1] = (Jogador1 ? "X" : "O");
+    }       
+            }
+    
+     public int lerColuna() {
+        System.out.println("Digite a coluna que deseja marcar ? ");
+        int coluna = Integer.parseInt(entrada.nextLine());
+        return coluna;
+    }
+
+    public int lerLinha() {
+        System.out.println("Digite a linha que deseja marcar ? ");
+        int linha = Integer.parseInt(entrada.nextLine());
+        return linha;
+    }
+
+    
+       
+}
+
+
+
+package JOGODAVELHINHA;
+
+public class Tabuleiro {
+    
+    public String[][] Zona;
+    
+    public Tabuleiro(){
             
-            Jogada();
-            if(terminou){
-                System.out.println("Parabens, o Jogador " +(Jogador1 ? "X" : "O")+" venceu!");
+    Zona = new String[3][3];
+        for (int i = 0; i < Zona.length; i++) {
+            for (int j = 0; j < Zona[i].length; j++) {
+                Zona[i][j] = "";
             }
-            Jogador1 = !Jogador1;
-        }while(!terminou);
+        }
     }
-        
-        
-    public void Preencher(){
-         
-         int l , c;
-         
-                do{
-                    System.out.println("Digite a linha que deseja colocar "+ (Jogador1 ? "X" : "O" ));
-                l = in.nextInt();
-                
-                }while(!(l < 4 && l > 0));
-                linha = l;
-                
-                do{
-                    System.out.println("Em qual coluna deseja colocar "+ (Jogador1 ? "X" : "O"));
-                c = in.nextInt();
-                }while(!(c < 4 && c > 0));
-                coluna = c;
-                
-        
+     
+    public String LerPosicao(int linha, int coluna) {
+        return Zona[linha][coluna];
+    }
+
+    public void ColocarPosicao(int linha, int coluna, String valor) {
+        Zona[linha][coluna] = valor;
     }
     
-    public void Jogada(){
-     for(int i = 0; i < tabuleiro.length; i++){
-        for(int j = 0; j < tabuleiro[i].length; j++){
-            System.out.print(tabuleiro[i][j]);
-                 if(j < 2){
-                     System.out.print("   |   ");
-                 }
-            }
-        System.out.println("");
-     }
-     verificar();
+    public boolean verificaVitoria(String icone) {
+        if ((Zona[0][0].equals(icone) && Zona[0][1].equals(icone) && Zona[0][2].equals(icone)) || 
+            (Zona[1][0].equals(icone) && Zona[1][1].equals(icone) && Zona[1][2].equals(icone)) || 
+            (Zona[2][0].equals(icone) && Zona[2][1].equals(icone) && Zona[2][2].equals(icone)) || 
+            (Zona[0][0].equals(icone) && Zona[1][0].equals(icone) && Zona[2][0].equals(icone)) || 
+            (Zona[0][1].equals(icone) && Zona[1][1].equals(icone) && Zona[2][1].equals(icone)) || 
+            (Zona[0][2].equals(icone) && Zona[1][2].equals(icone) && Zona[2][2].equals(icone)) || 
+            (Zona[0][0].equals(icone) && Zona[1][1].equals(icone) && Zona[2][2].equals(icone)) || 
+            (Zona[0][2].equals(icone) && Zona[1][1].equals(icone) && Zona[2][0].equals(icone))) { 
+            return true;
+        }
+        return false;
+    }
+}
+
+
+
+
+
+package JOGODAVELHINHA;
+
+
+public class Jogador {
+    
+    
+    private int numero;
+    private int quantidade;
+    
+    public Jogador(int numero_jogador) {
+        this.numero = numero_jogador;
+    }
+
+    public int NumeroJogador() {
+        return this.numero;
+    }
+
+    public int Jogada() {
+        return quantidade;
     }
     
-    public void verificar(){
-        
-        
-        if((tabuleiro[0][0] == "X" && tabuleiro[0][1] == "X" && tabuleiro[0][2] == "X") ||
-           (tabuleiro[1][0] == "X" && tabuleiro[1][1] == "X" && tabuleiro[1][2] == "X") ||
-           (tabuleiro[2][0] == "X" && tabuleiro[2][1] == "X" && tabuleiro[2][2] == "X") ||
-           (tabuleiro[0][0] == "X" && tabuleiro[1][0] == "X" && tabuleiro[2][0] == "X") ||
-           (tabuleiro[0][1] == "X" && tabuleiro[1][1] == "X" && tabuleiro[2][1] == "X") ||
-           (tabuleiro[0][2] == "X" && tabuleiro[1][2] == "X" && tabuleiro[2][2] == "X") ){
-            terminou = true;
-        }
-           
-        if((tabuleiro[0][0] == "O" && tabuleiro[0][1] == "O" && tabuleiro[0][2] == "O") ||
-           (tabuleiro[1][0] == "O" && tabuleiro[1][1] == "O" && tabuleiro[1][2] == "O") ||
-           (tabuleiro[2][0] == "O" && tabuleiro[2][1] == "O" && tabuleiro[2][2] == "O") ||
-           (tabuleiro[0][0] == "O" && tabuleiro[1][0] == "O" && tabuleiro[2][0] == "O") ||
-           (tabuleiro[0][1] == "O" && tabuleiro[1][1] == "O" && tabuleiro[2][1] == "O") ||
-           (tabuleiro[0][2] == "O" && tabuleiro[1][2] == "O" && tabuleiro[2][2] == "O") ){
-            terminou = true;
-        }
+    public void jogada(Tabuleiro tabuleiro, int linha, int coluna) {
+        tabuleiro.ColocarPosicao(linha, coluna, "X");
+    }
+    
+    public void jogada2(Tabuleiro tabuleiro, int linha, int coluna) {
+        tabuleiro.ColocarPosicao(linha, coluna, "O");
+    
+    
+    
 }
-         
-        
 }
+
+
+
+
+
+
+
+
+
+
+
+        
 
